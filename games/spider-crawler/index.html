@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spider Web Crawler</title>
+  <style>
+    body {
+      margin: 0;
+      background: #08080c;
+      color: #00ff66;
+      font-family: 'Courier New', Courier, monospace;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      padding: 20px;
+    }
+    .dashboard {
+      background: #0d0d14;
+      border: 1px solid #00ff66;
+      border-radius: 4px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px rgba(0, 255, 102, 0.1);
+    }
+    .input-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    input {
+      flex: 1;
+      background: #030305;
+      border: 1px solid #00ff66;
+      color: #00ff66;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
+    }
+    button {
+      background: transparent;
+      color: #00ff66;
+      border: 1px solid #00ff66;
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: #00ff66;
+      color: #08080c;
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.5);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      font-size: 14px;
+    }
+    .stat-card {
+      background: #040406;
+      border: 1px solid #222;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .stat-val {
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      gap: 15px;
+      min-height: 0;
+    }
+    .console {
+      flex: 1;
+      background: #030305;
+      border: 1px solid #222;
+      border-radius: 4px;
+      padding: 15px;
+      overflow-y: auto;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .node-map {
+      width: 45%;
+      background: #030305;
+      border: 1px solid #222;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+    .success { color: #00ff66; }
+    .info { color: #0099ff; }
+    .warning { color: #ffcc00; }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="input-row">
+      <input type="text" id="targetUrl" value="https://webspiderstudios.com" placeholder="https://example.com" />
+      <button id="scanBtn" onclick="toggleScan()">START CRAWL</button>
+    </div>
+    <div class="stats">
+      <div class="stat-card">
+        <div>PAGES CRAWLED</div>
+        <div class="stat-val" id="pagesCrawled">0</div>
+      </div>
+      <div class="stat-card">
+        <div>LINKS FOUND</div>
+        <div class="stat-val" id="linksFound">0</div>
+      </div>
+      <div class="stat-card">
+        <div>CURRENT DEPTH</div>
+        <div class="stat-val" id="currentDepth">0</div>
+      </div>
+      <div class="stat-card">
+        <div>SPEED (req/s)</div>
+        <div class="stat-val" id="crawlSpeed">0.0</div>
+      </div>
+    </div>
+  </div>
+  <main>
+    <div class="console" id="console">
+      <span class="info">[SYSTEM] Initialized WebSpider SEO Crawler Engine v2.4.</span>
+      <span class="info">[SYSTEM] Ready to query web graph nodes. Enter target and start.</span>
+    </div>
+    <div class="node-map" id="mapContainer">
+      <canvas id="mapCanvas"></canvas>
+    </div>
+  </main>
+
+  <script>
+    const logConsole = document.getElementById('console');
+    const canvas = document.getElementById('mapCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('mapContainer');
+    
+    // Fit canvas to container
+    function resizeCanvas() {
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    let isScanning = false;
+    let scanInterval;
+    let scanTimeout;
+    let pages = 0;
+    let links = 0;
+    let depth = 0;
+    let speed = 0;
+    let nodes = [];
+    
+    const mockDirectories = ['about', 'games', 'games/cyber-arachnid', 'contact', 'blog', 'blog/dev-diary-1', 'privacy', 'terms', 'careers', 'store', 'store/arachnid-editor', 'download', 'community', 'support', 'gallery'];
+    const mockFiles = ['index.html', 'main.js', 'style.css', 'icon.png', 'config.json', 'favicon.ico'];
+
+    function toggleScan() {
+      if (isScanning) {
+        stopScan();
+      } else {
+        startScan();
+      }
+    }
+
+    function startScan() {
+      isScanning = true;
+      document.getElementById('scanBtn').innerText = 'ABORT CRAWL';
+      log('[SYSTEM] Initiating scan for ' + document.getElementById('targetUrl').value, 'info');
+      pages = 0;
+      links = 0;
+      depth = 1;
+      speed = 1.2;
+      nodes = [{ x: canvas.width/2, y: canvas.height/2, label: '/', size: 10, connections: [] }];
+      
+      scanInterval = setInterval(simulateStep, 400);
+      scanTimeout = setTimeout(stopScan, 15000); // Stop after 15s
+    }
+
+    function stopScan() {
+      isScanning = false;
+      clearInterval(scanInterval);
+      clearTimeout(scanTimeout);
+      document.getElementById('scanBtn').innerText = 'START CRAWL';
+      log('[SYSTEM] Scan completed or aborted. Found ' + pages + ' pages and ' + links + ' total resources.', 'success');
+      speed = 0;
+      updateStats();
+    }
+
+    function log(msg, type='') {
+      const span = document.createElement('span');
+      span.innerText = msg;
+      if (type) span.className = type;
+      logConsole.appendChild(span);
+      logConsole.scrollTop = logConsole.scrollHeight;
+    }
+
+    function updateStats() {
+      document.getElementById('pagesCrawled').innerText = pages;
+      document.getElementById('linksFound').innerText = links;
+      document.getElementById('currentDepth').innerText = depth;
+      document.getElementById('crawlSpeed').innerText = speed.toFixed(1);
+    }
+
+    function simulateStep() {
+      pages++;
+      links += Math.floor(Math.random() * 4) + 1;
+      depth = Math.min(3, Math.floor(pages/6) + 1);
+      speed = 3.5 + Math.random() * 2;
+      
+      const host = document.getElementById('targetUrl').value;
+      const path = '/' + mockDirectories[Math.floor(Math.random() * mockDirectories.length)] + '/' + mockFiles[Math.floor(Math.random() * mockFiles.length)];
+      const statusCode = Math.random() > 0.9 ? 404 : 200;
+      
+      if (statusCode === 200) {
+        log('GET ' + host + path + ' - 200 OK (' + Math.floor(Math.random() * 120 + 30) + 'ms)', 'success');
+        
+        // Add canvas node
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 80 + 50 * depth;
+        const root = nodes[0];
+        const nodeX = root.x + Math.cos(angle) * radius;
+        const nodeY = root.y + Math.sin(angle) * radius;
+        
+        const newNode = {
+          x: nodeX,
+          y: nodeY,
+          label: path.split('/').pop(),
+          size: 5,
+          color: '#00ff66'
+        };
+        nodes.push(newNode);
+      } else {
+        log('GET ' + host + path + ' - 404 NOT FOUND', 'warning');
+      }
+      
+      updateStats();
+      drawGraph();
+    }
+
+    function drawGraph() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      if (nodes.length === 0) return;
+      
+      // Draw grid lines
+      ctx.strokeStyle = '#051508';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 30) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 30) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+      
+      // Draw connections
+      ctx.strokeStyle = 'rgba(0, 255, 102, 0.2)';
+      ctx.lineWidth = 1;
+      const root = nodes[0];
+      for (let i = 1; i < nodes.length; i++) {
+        ctx.beginPath();
+        ctx.moveTo(root.x, root.y);
+        ctx.lineTo(nodes[i].x, nodes[i].y);
+        ctx.stroke();
+      }
+      
+      // Draw nodes
+      for (let n of nodes) {
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.size, 0, Math.PI * 2);
+        ctx.fillStyle = n === root ? '#fff' : '#00ff green';
+        ctx.fillStyle = n === root ? '#fff' : '#00ff66';
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#00ff66';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        
+        ctx.fillStyle = '#888';
+        ctx.font = '8px monospace';
+        ctx.fillText(n.label, n.x + 8, n.y + 3);
+      }
+    }
+  </script>
+</body>
+</html>

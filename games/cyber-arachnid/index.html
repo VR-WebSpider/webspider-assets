@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cyber Arachnid</title>
+  <style>
+    body {
+      margin: 0;
+      background: #050508;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    #gameContainer {
+      position: relative;
+      border: 3px solid #ff3333;
+      box-shadow: 0 0 20px rgba(255, 51, 51, 0.4);
+      background: #080810;
+    }
+    canvas {
+      display: block;
+    }
+    .hud {
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      right: 15px;
+      display: flex;
+      justify-content: space-between;
+      font-family: monospace;
+      font-size: 20px;
+      color: #ff3333;
+      text-shadow: 0 0 5px rgba(255, 51, 51, 0.8);
+      pointer-events: none;
+    }
+    .screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(5, 5, 8, 0.9);
+      transition: opacity 0.3s;
+    }
+    h1 {
+      color: #ff3333;
+      text-shadow: 0 0 10px rgba(255, 51, 51, 0.8);
+      margin-bottom: 5px;
+      font-size: 36px;
+    }
+    p {
+      color: #aaa;
+      margin-bottom: 20px;
+    }
+    button {
+      background: transparent;
+      color: #ff3333;
+      border: 2px solid #ff3333;
+      padding: 10px 25px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+      box-shadow: 0 0 10px rgba(255, 51, 51, 0.2);
+    }
+    button:hover {
+      background: #ff3333;
+      color: #050508;
+      box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <div id="gameContainer">
+    <div class="hud">
+      <div id="score">SCORE: 0</div>
+      <div id="highScore">HIGH: 0</div>
+    </div>
+    <canvas id="gameCanvas" width="800" height="500"></canvas>
+    
+    <div id="startScreen" class="screen">
+      <h1>CYBER ARACHNID</h1>
+      <p>Control the Spider with LEFT/RIGHT arrows. Dodge the falling laser debris!</p>
+      <button onclick="startGame()">START MISSION</button>
+    </div>
+
+    <div id="gameOverScreen" class="screen" style="display: none;">
+      <h1>SYSTEM CRASHED</h1>
+      <p id="finalScore">Final Score: 0</p>
+      <button onclick="startGame()">REBOOT SYSTEM</button>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    let score = 0;
+    let highScore = localStorage.getItem('ca_high') || 0;
+    document.getElementById('highScore').innerText = 'HIGH: ' + highScore;
+    
+    let player = {
+      x: 400,
+      y: 450,
+      width: 40,
+      height: 25,
+      speed: 8
+    };
+    
+    let keys = {};
+    let hazards = [];
+    let gameInterval;
+    let gameActive = false;
+    let spawnRate = 0.05;
+    let gameSpeed = 3;
+
+    window.addEventListener('keydown', e => keys[e.code] = true);
+    window.addEventListener('keyup', e => keys[e.code] = false);
+
+    function startGame() {
+      document.getElementById('startScreen').style.display = 'none';
+      document.getElementById('gameOverScreen').style.display = 'none';
+      score = 0;
+      hazards = [];
+      player.x = 400;
+      spawnRate = 0.05;
+      gameSpeed = 3;
+      gameActive = true;
+      
+      if(gameInterval) clearInterval(gameInterval);
+      gameInterval = setInterval(update, 1000/60);
+    }
+
+    function update() {
+      if (!gameActive) return;
+      
+      // Move Player
+      if (keys['ArrowLeft'] || keys['KeyA']) player.x -= player.speed;
+      if (keys['ArrowRight'] || keys['KeyD']) player.x += player.speed;
+      
+      // Bound check
+      if (player.x < 0) player.x = 0;
+      if (player.x > canvas.width - player.width) player.x = canvas.width - player.width;
+      
+      // Spawn hazards
+      if (Math.random() < spawnRate) {
+        hazards.push({
+          x: Math.random() * (canvas.width - 20),
+          y: -20,
+          width: Math.random() * 15 + 10,
+          height: Math.random() * 20 + 15,
+          speed: Math.random() * 2 + gameSpeed,
+          color: Math.random() > 0.5 ? '#ff3333' : '#ff6666'
+        });
+      }
+      
+      // Speed scaling
+      score += 1;
+      document.getElementById('score').innerText = 'SCORE: ' + score;
+      if (score % 500 === 0) {
+        gameSpeed += 0.5;
+        spawnRate += 0.01;
+      }
+      
+      // Move and check hazards
+      for (let i = hazards.length - 1; i >= 0; i--) {
+        hazards[i].y += hazards[i].speed;
+        
+        // Collision check
+        if (
+          player.x < hazards[i].x + hazards[i].width &&
+          player.x + player.width > hazards[i].x &&
+          player.y < hazards[i].y + hazards[i].height &&
+          player.y + player.height > hazards[i].y
+        ) {
+          gameOver();
+          return;
+        }
+        
+        // Remove offscreen
+        if (hazards[i].y > canvas.height) {
+          hazards.splice(i, 1);
+        }
+      }
+      
+      draw();
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw grid background
+      ctx.strokeStyle = '#121224';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+      
+      // Draw Player (Spider-like ship)
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = '#00ffff';
+      
+      // Body
+      ctx.beginPath();
+      ctx.arc(player.x + player.width/2, player.y + player.height/2, 8, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Legs (Simple lines)
+      ctx.strokeStyle = '#00ffff';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      // Left legs
+      ctx.moveTo(player.x + player.width/2 - 4, player.y + player.height/2);
+      ctx.lineTo(player.x, player.y);
+      ctx.moveTo(player.x + player.width/2 - 4, player.y + player.height/2);
+      ctx.lineTo(player.x, player.y + player.height/2);
+      ctx.moveTo(player.x + player.width/2 - 4, player.y + player.height/2);
+      ctx.lineTo(player.x, player.y + player.height);
+      // Right legs
+      ctx.moveTo(player.x + player.width/2 + 4, player.y + player.height/2);
+      ctx.lineTo(player.x + player.width, player.y);
+      ctx.moveTo(player.x + player.width/2 + 4, player.y + player.height/2);
+      ctx.lineTo(player.x + player.width, player.y + player.height/2);
+      ctx.moveTo(player.x + player.width/2 + 4, player.y + player.height/2);
+      ctx.lineTo(player.x + player.width, player.y + player.height);
+      ctx.stroke();
+      
+      // Draw Hazards
+      ctx.shadowColor = '#ff3333';
+      for (let h of hazards) {
+        ctx.fillStyle = h.color;
+        ctx.fillRect(h.x, h.y, h.width, h.height);
+      }
+      ctx.shadowBlur = 0;
+    }
+
+    function gameOver() {
+      gameActive = false;
+      clearInterval(gameInterval);
+      
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('ca_high', highScore);
+        document.getElementById('highScore').innerText = 'HIGH: ' + highScore;
+      }
+      
+      document.getElementById('finalScore').innerText = 'Final Score: ' + score;
+      document.getElementById('gameOverScreen').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
