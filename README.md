@@ -1,62 +1,59 @@
 <div align="center">
 
-  <img src="branding/webspider_logo.png" alt="WebSpider Studios Logo" width="420" />
+  <img src="branding/studio_logo_white.png" alt="WebSpider Studios Logo" width="480" />
 
-  # WebSpider Studios Asset Repository
+  # WebSpider Studios Official Asset Hub
 
-  **Official Central Distribution Hub for WebSpider Studios Products, Binary Installers & Brand Media**
+  **Centralized Distribution Hub for WebSpider Studios Executables, Installers, & Official Brand Media**
 
   [![WebSpider Studios](https://img.shields.io/badge/Organization-WebSpider_Studios-00b894.svg?style=for-the-badge)](https://github.com/VR-WebSpider)
   [![Software Suite](https://img.shields.io/badge/Ecosystem-WebSpider_Studios_Suite-723EC3.svg?style=for-the-badge)](https://github.com/VR-WebSpider)
-  [![License: GPL v3](https://img.shields.io/badge/License-GPL_v3-emerald.svg?style=for-the-badge)](https://www.gnu.org/licenses/gpl-3.0)
+  [![License: All Rights Reserved](https://img.shields.io/badge/License-Proprietary_%7C_All_Rights_Reserved-red.svg?style=for-the-badge)](https://github.com/VR-WebSpider/webspider-assets)
 
 </div>
 
 ---
 
-## 🏛️ About WebSpider Studios
+## 🔒 Proprietary Asset Rights & Notice
 
-**WebSpider Studios** is an innovative software development studio building next-generation AI-powered applications, creative suites, gaming infrastructure, and web tools. 
-
-This repository serves as the official centralized storage hub for **WebSpider Studios** brand assets, installer setup binaries, application release builds, and distribution media.
+> [!IMPORTANT]
+> All binary software builds, installer setups (`.exe`), application packages (`.apk`, `.dmg`, `.zip`), logos, icons, wordmarks, and media assets in this repository are **proprietary assets of WebSpider Studios** and are **NOT open source**.
+>
+> Copyright © 2026 WebSpider Studios. All Rights Reserved. Unauthorized copying, redistribution, reverse-engineering, or commercial use of these brand assets or binary builds without prior written authorization from WebSpider Studios is strictly prohibited.
 
 ---
 
-## 📦 WebSpider Studios Product Suite & Download Hub
+## 📦 WebSpider Studios Official Releases & Installers
 
-| Product Name | Category | Version | Platform | Quick Download |
+| Product | Category | Version | Platform | Official Download |
 | :--- | :--- | :---: | :---: | :---: |
 | 💻 **WebSpider AI IDE** | AI Code Editor | `v1.0.0` | Windows | [<kbd>⬇️ Setup (.exe)</kbd>](https://github.com/VR-WebSpider/webspider-assets/releases/download/v1.0.0/WebSpiderAIIDE-Setup-1.0.0-x64.exe) \| [<kbd>📦 Portable (.zip)</kbd>](https://github.com/VR-WebSpider/webspider-assets/releases/download/v1.0.0/WebSpider-IDE-Windows.zip) |
 | 🚀 **WebSpider Launcher** | PC Game Launcher | `v1.0.0` | Windows | [<kbd>⬇️ Setup (.exe)</kbd>](https://github.com/VR-WebSpider/webspider-assets/releases/download/v1.0.0/WebSpiderLauncher_Setup_1.0.0.exe) |
 | 📱 **WebSpider Smart Downloader** | Media Downloader | `v1.0.0` | Android | [<kbd>⬇️ Download (.apk)</kbd>](https://github.com/VR-WebSpider/webspider-assets/raw/main/WebSpider_Smart_Downloader_v1.0.apk) |
 | 🎨 **WebSpider 3D** | 3D Creation Suite | `v3.1.49` | Windows | [<kbd>⬇️ Setup (.exe)</kbd>](https://github.com/VR-WebSpider/webspider-assets/raw/main/WebSpider3D_Setup_3.1.49.exe) |
-| 🌐 **WebSpider Browser** | Smart Web Browser | `v1.0.0` | Windows / Web | [<kbd>🌐 Explore Browser</kbd>](https://github.com/VR-WebSpider/WebSpider-Studios) |
-| 🎮 **WebSpider GDD Tool** | Game Design Builder | `v1.0.0` | Web / App | [<kbd>🎮 Open GDD Tool</kbd>](https://github.com/VR-WebSpider/WebSpider-Studios) |
+| 🌐 **WebSpider Browser** | Smart Web Browser | `v1.0.0` | Windows / Web | [<kbd>🌐 Launch Browser</kbd>](https://github.com/VR-WebSpider/WebSpider-Studios) |
+| 🎮 **WebSpider GDD Tool** | Game Design Builder | `v1.0.0` | Web / App | [<kbd>🎮 Launch GDD Tool</kbd>](https://github.com/VR-WebSpider/WebSpider-Studios) |
 
 ---
 
-## 🎨 WebSpider Studios Brand Assets (`/branding`)
+## 🎨 Official WebSpider Studios Brand Logos (`/branding`)
 
-Official logos, vector wordmarks, and studio brand artwork are hosted in the [`branding/`](branding/) directory:
+The [`branding/`](branding/) directory contains official original WebSpider Studios logos and brand artwork:
 
-- 🖼️ **Official Studio Logo**: [`branding/webspider_logo.png`](branding/webspider_logo.png)
-- ⚡ **Official Brand Icon**: [`branding/webspider_icon.svg`](branding/webspider_icon.svg)
-- 🎨 **Product Artwork**: [`branding/webspider3d_splash.png`](branding/webspider3d_splash.png)
-
----
-
-## ⚖️ License & Trademark Guidelines
-
-- **Software Source Code**: Source code across the WebSpider Studios product suite is published under the **GNU General Public License v3.0 or later (GPL-3.0-or-later)**.
-- **Brand Assets & Trademarks**: The WebSpider Studios name, logo, product titles, and brand assets are trademarks of **WebSpider Studios** governed under `LicenseRef-WebSpider-Brand`.
+| Preview | Asset Name | File Path |
+| :---: | :--- | :--- |
+| <img src="branding/studio_logo_white.png" width="180" /> | **White Studio Logo** | [`branding/studio_logo_white.png`](branding/studio_logo_white.png) |
+| <img src="branding/studio_logo_black.png" width="180" /> | **Black Studio Logo** | [`branding/studio_logo_black.png`](branding/studio_logo_black.png) |
+| <img src="branding/logo.png" width="80" /> | **Main Studio Logo** | [`branding/logo.png`](branding/logo.png) |
+| <img src="branding/logo-green.png" width="80" /> | **Arachnid Green Logo** | [`branding/logo-green.png`](branding/logo-green.png) |
+| <img src="branding/logo-blue.png" width="80" /> | **Cyber Blue Logo** | [`branding/logo-blue.png`](branding/logo-blue.png) |
 
 ---
 
-## 🌐 WebSpider Studios Official Resources
+## 🌐 Official Links & Resources
 
-- 🌐 **Official Website**: [webspiderstudios.com](https://github.com/VR-WebSpider/WebSpider-Studios)
-- 💼 **GitHub Organization**: [github.com/VR-WebSpider](https://github.com/VR-WebSpider)
-- 🏢 **Corporate Repository**: [WebSpider-Studios Repository](https://github.com/VR-WebSpider/WebSpider-Studios)
+- 🌐 **WebSpider Studios Website**: [webspiderstudios.com](https://github.com/VR-WebSpider/WebSpider-Studios)
+- 🏢 **GitHub Organization**: [github.com/VR-WebSpider](https://github.com/VR-WebSpider)
 
 ---
 
