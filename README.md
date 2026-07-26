@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="branding/studio_logo_white.png" alt="WebSpider Studios Logo" width="480" />
+  <img src="branding/WebSpider Studios Official Logo Color.png" alt="WebSpider Studios Official Logo" width="480" />
 
   # WebSpider Studios Official Asset Hub
 
@@ -36,17 +36,16 @@
 
 ---
 
-## 🎨 Official WebSpider Studios Brand Logos (`/branding`)
+## 🎨 Official WebSpider Studios High-Resolution Logos (`/branding`)
 
-The [`branding/`](branding/) directory contains official original WebSpider Studios logos and brand artwork:
+The [`branding/`](branding/) directory contains the official 2048x2048 high-resolution WebSpider Studios brand logos and artwork:
 
 | Preview | Asset Name | File Path |
 | :---: | :--- | :--- |
-| <img src="branding/studio_logo_white.png" width="180" /> | **White Studio Logo** | [`branding/studio_logo_white.png`](branding/studio_logo_white.png) |
-| <img src="branding/studio_logo_black.png" width="180" /> | **Black Studio Logo** | [`branding/studio_logo_black.png`](branding/studio_logo_black.png) |
-| <img src="branding/logo.png" width="80" /> | **Main Studio Logo** | [`branding/logo.png`](branding/logo.png) |
-| <img src="branding/logo-green.png" width="80" /> | **Arachnid Green Logo** | [`branding/logo-green.png`](branding/logo-green.png) |
-| <img src="branding/logo-blue.png" width="80" /> | **Cyber Blue Logo** | [`branding/logo-blue.png`](branding/logo-blue.png) |
+| <img src="branding/WebSpider Studios Official Logo Color.png" width="180" /> | **WebSpider Studios Official Logo (Color)** | [`branding/WebSpider Studios Official Logo Color.png`](<branding/WebSpider Studios Official Logo Color.png>) |
+| <img src="branding/WebSpider Studios Official Logo White 2048 X 2048.png" width="180" /> | **WebSpider Studios Official Logo (White 2048x2048)** | [`branding/WebSpider Studios Official Logo White 2048 X 2048.png`](<branding/WebSpider Studios Official Logo White 2048 X 2048.png>) |
+| <img src="branding/WebSpider Studios Official Logo Black 2048 X 2048.png" width="180" /> | **WebSpider Studios Official Logo (Black 2048x2048)** | [`branding/WebSpider Studios Official Logo Black 2048 X 2048.png`](<branding/WebSpider Studios Official Logo Black 2048 X 2048.png>) |
+| <img src="branding/WebSpider Studios Official Logo Transparent WireFrame.png" width="180" /> | **WebSpider Studios Official Logo (Transparent WireFrame)** | [`branding/WebSpider Studios Official Logo Transparent WireFrame.png`](<branding/WebSpider Studios Official Logo Transparent WireFrame.png>) |
 
 ---
 
