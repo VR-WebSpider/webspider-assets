@@ -1,61 +1,55 @@
-<div align="center">
+# <p align="center"><img src="https://raw.githubusercontent.com/VR-WebSpider/webspider-assets/main/logos/WebSpider%20Studios%20Official%20Logo%20Transparent.png" width="120" alt="WebSpider Logo"></p>
+# <p align="center">WebSpider Studios Asset Distribution</p>
 
-  <img src="branding/WebSpider Studios Official Logo Color.png" alt="WebSpider Studios Official Logo" width="480" />
+<p align="center">
+  <img src="https://img.shields.io/badge/Platform-Windows-00f0ff?style=flat-square&logo=windows" alt="Platform">
+  <img src="https://img.shields.io/badge/Version-1.0.0-a855f7?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/License-Proprietary-red?style=flat-square" alt="License">
+</p>
 
-  # WebSpider Studios Official Asset Hub
-
-  **Centralized Distribution Hub for WebSpider Studios Executables, Installers, & Official Brand Media**
-
-  [![WebSpider Studios](https://img.shields.io/badge/Organization-WebSpider_Studios-00b894.svg?style=for-the-badge)](https://github.com/VR-WebSpider)
-  [![Software Suite](https://img.shields.io/badge/Ecosystem-WebSpider_Studios_Suite-723EC3.svg?style=for-the-badge)](https://github.com/VR-WebSpider)
-  [![License: All Rights Reserved](https://img.shields.io/badge/License-Proprietary_%7C_All_Rights_Reserved-red.svg?style=for-the-badge)](https://github.com/VR-WebSpider/webspider-assets)
-
-</div>
+Welcome to the official public assets, logos, and software distribution repository for **WebSpider Studios**. This repository houses all media assets, brand guidelines, and official application installers for WebSpider ecosystem products.
 
 ---
 
-## 🔒 Proprietary Asset Rights & Notice
+## 🚀 Featured Software Installers
 
-> [!IMPORTANT]
-> All binary software builds, installer setups (`.exe`), application packages (`.apk`, `.dmg`, `.zip`), logos, icons, wordmarks, and media assets in this repository are **proprietary assets of WebSpider Studios** and are **NOT open source**.
->
-> Copyright © 2026 WebSpider Studios. All Rights Reserved. Unauthorized copying, redistribution, reverse-engineering, or commercial use of these brand assets or binary builds without prior written authorization from WebSpider Studios is strictly prohibited.
+### WebSpider Browser (v1.0.0)
+An AI-native, Chromium-based smart web browser featuring glassmorphic design, page context-aware assistant tools, forced dark mode, and an optimized reader view.
 
----
-
-## 📦 WebSpider Studios Official Releases & Installers
-
-| Product | Category | Version | Platform | Official Download |
-| :--- | :--- | :---: | :---: | :---: |
-| 💻 **WebSpider AI IDE** | AI Code Editor | `v1.0.0` | Windows | [<kbd>⬇️ Setup (.exe)</kbd>](https://github.com/VR-WebSpider/webspider-assets/releases/download/v1.0.0/WebSpiderAIIDE-Setup-1.0.0-x64.exe) \| [<kbd>📦 Portable (.zip)</kbd>](https://github.com/VR-WebSpider/webspider-assets/releases/download/v1.0.0/WebSpider-IDE-Windows.zip) |
-| 🚀 **WebSpider Launcher** | PC Game Launcher | `v1.0.0` | Windows | [<kbd>⬇️ Setup (.exe)</kbd>](https://github.com/VR-WebSpider/webspider-assets/releases/download/v1.0.0/WebSpiderLauncher_Setup_1.0.0.exe) |
-| 📱 **WebSpider Smart Downloader** | Media Downloader | `v1.0.0` | Android | [<kbd>⬇️ Download (.apk)</kbd>](https://github.com/VR-WebSpider/webspider-assets/raw/main/WebSpider_Smart_Downloader_v1.0.apk) |
-| 🎨 **WebSpider 3D** | 3D Creation Suite | `v3.1.49` | Windows | [<kbd>⬇️ Setup (.exe)</kbd>](https://github.com/VR-WebSpider/webspider-assets/raw/main/WebSpider3D_Setup_3.1.49.exe) |
-| 🌐 **WebSpider Browser** | Smart Web Browser | `v1.0.0` | Windows / Web | [<kbd>🌐 Launch Browser</kbd>](https://github.com/VR-WebSpider/WebSpider-Studios) |
-| 🎮 **WebSpider GDD Tool** | Game Design Builder | `v1.0.0` | Web / App | [<kbd>🎮 Launch GDD Tool</kbd>](https://github.com/VR-WebSpider/WebSpider-Studios) |
+<p align="center">
+  <a href="https://github.com/VR-WebSpider/webspider-assets/raw/main/installers/WebSpider%20Setup%201.0.0.exe">
+    <img src="https://img.shields.io/badge/DOWNLOAD-WebSpider%20Browser%20Installer%20(Windows%20x64)-00f0ff?style=for-the-badge&logo=windows" height="40" alt="Download WebSpider Browser">
+  </a>
+</p>
 
 ---
 
-## 🎨 Official WebSpider Studios High-Resolution Logos (`/branding`)
+## 🎨 Public Brand Assets
 
-The [`branding/`](branding/) directory contains the official 2048x2048 high-resolution WebSpider Studios brand logos and artwork:
+These branding files are available for open reference, community guidelines, or developers integrating WebSpider services.
 
-| Preview | Asset Name | File Path |
-| :---: | :--- | :--- |
-| <img src="branding/WebSpider Studios Official Logo Color.png" width="180" /> | **WebSpider Studios Official Logo (Color)** | [`branding/WebSpider Studios Official Logo Color.png`](<branding/WebSpider Studios Official Logo Color.png>) |
-| <img src="branding/WebSpider Studios Official Logo White 2048 X 2048.png" width="180" /> | **WebSpider Studios Official Logo (White 2048x2048)** | [`branding/WebSpider Studios Official Logo White 2048 X 2048.png`](<branding/WebSpider Studios Official Logo White 2048 X 2048.png>) |
-| <img src="branding/WebSpider Studios Official Logo Black 2048 X 2048.png" width="180" /> | **WebSpider Studios Official Logo (Black 2048x2048)** | [`branding/WebSpider Studios Official Logo Black 2048 X 2048.png`](<branding/WebSpider Studios Official Logo Black 2048 X 2048.png>) |
-| <img src="branding/WebSpider Studios Official Logo Transparent WireFrame.png" width="180" /> | **WebSpider Studios Official Logo (Transparent WireFrame)** | [`branding/WebSpider Studios Official Logo Transparent WireFrame.png`](<branding/WebSpider Studios Official Logo Transparent WireFrame.png>) |
+| File Asset Name | Description | File Format | Preview Link |
+| :--- | :--- | :---: | :---: |
+| **Official Logo (Transparent)** | Transparent branding logo for dark overlays | `PNG` | [View Logo](https://raw.githubusercontent.com/VR-WebSpider/webspider-assets/main/logos/WebSpider%20Studios%20Official%20Logo%20Transparent.png) |
+| **Official Logo (With BG)** | Standard logo with the WebSpider dark background | `PNG` | [View Logo](https://raw.githubusercontent.com/VR-WebSpider/webspider-assets/main/logos/WebSpider%20Studios%20Official%20Logo%20With%20BG.png) |
 
 ---
 
-## 🌐 Official Links & Resources
+## 📦 File Structures
 
-- 🌐 **WebSpider Studios Website**: [webspiderstudios.com](https://github.com/VR-WebSpider/WebSpider-Studios)
-- 🏢 **GitHub Organization**: [github.com/VR-WebSpider](https://github.com/VR-WebSpider)
+```
+webspider-assets/
+├── logos/
+│   ├── WebSpider Studios Official Logo Transparent.png
+│   └── WebSpider Studios Official Logo With BG.png
+└── installers/
+    └── WebSpider Setup 1.0.0.exe
+```
 
 ---
 
-<div align="center">
-  <sub>Copyright © 2026 WebSpider Studios. All rights reserved.</sub>
-</div>
+> [!NOTE]
+> If you are a developer looking to integrate WebSpider SDKs, please refer to the private [WebSpider Browser Codebase](https://github.com/VR-WebSpider/webspider-browser).
+
+### 🛡️ Security Check
+All installers uploaded here are compiled under strict isolated pipelines and undergo signature validation. If you encounter any diagnostic warning, please check the SHA-256 signatures of the files.

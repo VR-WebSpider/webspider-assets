@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spider Catch</title>
+  <style>
+    body {
+      margin: 0;
+      background: #080303;
+      color: #fff;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    #gameContainer {
+      position: relative;
+      border: 3px solid #ff3333;
+      box-shadow: 0 0 20px rgba(255, 51, 51, 0.4);
+      background: #0c0808;
+    }
+    canvas {
+      display: block;
+    }
+    .hud {
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      right: 15px;
+      display: flex;
+      justify-content: space-between;
+      font-family: monospace;
+      font-size: 20px;
+      color: #ff3333;
+      text-shadow: 0 0 5px rgba(255, 51, 51, 0.8);
+      pointer-events: none;
+    }
+    .screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(8, 3, 3, 0.9);
+    }
+    h1 {
+      color: #ff3333;
+      text-shadow: 0 0 10px rgba(255, 51, 51, 0.8);
+      margin-bottom: 5px;
+      font-size: 36px;
+    }
+    p {
+      color: #aaa;
+      margin-bottom: 20px;
+      text-align: center;
+      max-width: 80%;
+    }
+    button {
+      background: transparent;
+      color: #ff3333;
+      border: 2px solid #ff3333;
+      padding: 10px 25px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: #ff3333;
+      color: #080303;
+      box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <div id="gameContainer">
+    <div class="hud">
+      <div id="score">BUGS CAUGHT: 0</div>
+      <div id="lives">LIVES: 3</div>
+    </div>
+    <canvas id="gameCanvas" width="800" height="500"></canvas>
+    
+    <div id="startScreen" class="screen">
+      <h1>SPIDER CATCH</h1>
+      <p>Bugs are invading the web! Click on them before they cross the screen to protect your territory.</p>
+      <button onclick="startGame()">START DEFENSE</button>
+    </div>
+
+    <div id="gameOverScreen" class="screen" style="display: none;">
+      <h1>WEB COLLAPSED</h1>
+      <p id="finalScore">Bugs Caught: 0</p>
+      <button onclick="startGame()">RETRY</button>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    let score = 0;
+    let lives = 3;
+    let bugs = [];
+    let gameInterval;
+    let gameActive = false;
+    let spawnRate = 0.02;
+    let bugSpeed = 2;
+
+    canvas.addEventListener('mousedown', handleClick);
+
+    function startGame() {
+      document.getElementById('startScreen').style.display = 'none';
+      document.getElementById('gameOverScreen').style.display = 'none';
+      score = 0;
+      lives = 3;
+      bugs = [];
+      spawnRate = 0.02;
+      bugSpeed = 2;
+      gameActive = true;
+      updateHud();
+      
+      if(gameInterval) clearInterval(gameInterval);
+      gameInterval = setInterval(update, 1000/60);
+    }
+
+    function updateHud() {
+      document.getElementById('score').innerText = 'BUGS CAUGHT: ' + score;
+      document.getElementById('lives').innerText = 'LIVES: ' + lives;
+    }
+
+    function handleClick(e) {
+      if (!gameActive) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      for (let i = bugs.length - 1; i >= 0; i--) {
+        const b = bugs[i];
+        const dist = Math.hypot(b.x - x, b.y - y);
+        if (dist < b.radius + 10) {
+          bugs.splice(i, 1);
+          score++;
+          updateHud();
+          
+          // Scale difficulty
+          if (score % 10 === 0) {
+            bugSpeed += 0.5;
+            spawnRate += 0.005;
+          }
+          break;
+        }
+      }
+    }
+
+    function update() {
+      if (!gameActive) return;
+      
+      // Spawn bugs
+      if (Math.random() < spawnRate) {
+        bugs.push({
+          x: -20,
+          y: Math.random() * (canvas.height - 100) + 50,
+          radius: Math.random() * 8 + 8,
+          speed: Math.random() * 1.5 + bugSpeed,
+          color: Math.random() > 0.5 ? '#a855f7' : '#ec4899',
+          wiggle: Math.random() * 100
+        });
+      }
+      
+      // Move bugs
+      for (let i = bugs.length - 1; i >= 0; i--) {
+        bugs[i].x += bugs[i].speed;
+        // Wiggle movement vertically
+        bugs[i].y += Math.sin(bugs[i].wiggle + bugs[i].x / 20) * 0.8;
+        
+        // Escape check
+        if (bugs[i].x > canvas.width + 20) {
+          bugs.splice(i, 1);
+          lives--;
+          updateHud();
+          
+          if (lives <= 0) {
+            gameOver();
+            return;
+          }
+        }
+      }
+      
+      draw();
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw Spider Web Background
+      ctx.strokeStyle = '#1a1010';
+      ctx.lineWidth = 1;
+      const cx = canvas.width/2;
+      const cy = canvas.height/2;
+      
+      // Web spokes
+      for (let i = 0; i < 8; i++) {
+        const angle = (i * Math.PI) / 4;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.cos(angle) * 600, cy + Math.sin(angle) * 600);
+        ctx.stroke();
+      }
+      // Web rings
+      for (let r = 50; r < 500; r += 50) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      
+      // Draw Bugs
+      for (let b of bugs) {
+        ctx.fillStyle = b.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = b.color;
+        
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Draw simple bug legs
+        ctx.strokeStyle = b.color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(b.x - b.radius, b.y - 2);
+        ctx.lineTo(b.x - b.radius - 5, b.y - 6);
+        ctx.moveTo(b.x - b.radius, b.y + 2);
+        ctx.lineTo(b.x - b.radius - 5, b.y + 6);
+        
+        ctx.moveTo(b.x + b.radius, b.y - 2);
+        ctx.lineTo(b.x + b.radius + 5, b.y - 6);
+        ctx.moveTo(b.x + b.radius, b.y + 2);
+        ctx.lineTo(b.x + b.radius + 5, b.y + 6);
+        ctx.stroke();
+      }
+      ctx.shadowBlur = 0;
+    }
+
+    function gameOver() {
+      gameActive = false;
+      clearInterval(gameInterval);
+      document.getElementById('finalScore').innerText = 'Bugs Caught: ' + score;
+      document.getElementById('gameOverScreen').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
